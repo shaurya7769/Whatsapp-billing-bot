@@ -1,0 +1,1009 @@
+//#include<stdio.h>     
+#define  STACK_SIZE  3     
+int  s[STACK_SIZE];     
+int  top=-1;     
+void  push()     
+{     
+int  n;     
+if(top==STACK_SIZE-1)     
+printf("\nStack  overflow\n");     
+else     
+{     
+}     
+}     
+void  pop()     
+{     
+printf("\nEnter  the  data  to  be  pushed\n");     
+scanf("%d",&n);     
+s[++top]=n;     
+if(top==-1)     
+printf("\nStack  empty\n");     
+else     
+printf("\n%d  is  popped\n",  s[top--]);     
+}     
+void  display()     
+{     
+int  i;     
+if(top==-1)     
+printf("\nStack  empty\n");     
+else     
+{     
+}     
+}     
+int  main()     
+{     
+int  ch;     
+for(;;)     
+{     
+     
+printf("\nStack  elements  are\n");     
+for(i=top;i>=0;i--)     
+printf("%d\n",s[i]);     
+printf("\n1.PUSH\t2.POP\t3.DISPLAY\t4.EXIT\n");     
+printf("\nEnter  your  choice\n");     
+scanf("%d",&ch);     
+switch(ch)     
+{     
+case  1:  push();     
+break;          
+case  2:  pop(); 
+break;     
+case  3:  display();     
+break;     
+case  4:  return  0;     
+default:  printf("\nInvalid  choice\n");stack 1a)
+}}}
+
+----------------------------------------------
+
+//1(b)parenthesis missmatch
+#include   <stdio.h>     
+#define   sz   20     
+#include   <string.h>     
+void   push   (char   s[sz],int   *top,char   ch)     
+{     
+*top   =   *top+1;     
+s[*top]   =   ch;     
+}     
+void   pop   (int   *top)     
+{     
+*top   =   *top-1;     
+}     
+int   main()     
+{     
+char   in[sz],ch,s[sz];     
+int   i,top=-1;     
+printf   ("Enter   the   Expression\n");     
+scanf   ("%s",   in);     
+push   (s,&top,'#');     
+for   (i=0;i<strlen(in);i++)     
+{     
+ch   =   in[i];     
+if   (ch   ==   '(')     
+push   (s,&top,ch);     
+if   (ch   ==   ')')     
+{     
+if  (s[top]  !=  '#')     
+pop  (&top);     
+else     
+{     
+}     
+}     
+if  (s[top]  ==  '#')     
+printf(  "Closing  Parentheses  are  not  balanced\n");     
+return  (0);  }     
+printf  ("Parentheses  are  balanced\n");     
+else     
+{  
+printf  ("Opening  Parentheses  are  not  balanced\n");
+}
+
+__________________
+2(a) queue simulation
+#include<stdio.h>     
+#define  maxsize  3     
+int  q[maxsize],  front=0,rear=-1;     
+void  insert()     
+{     
+int  n;     
+if(rear==maxsize-1)     
+printf("\nQueue  full\n");     
+else     
+{     
+}     
+}     
+void  delete()     
+{     
+printf("\nEnter  the  data  to  be  added\n");     
+scanf("%d",  &n);     
+q[++rear]=n;     
+if(front>rear)     
+printf("\nQueue  is  empty\n");     
+else     
+{     
+printf("\n%d  is  deleted\n",q[front++]);     
+if(front>rear  &&  rear==maxsize-1)     
+{     
+printf("\nReinit\n");     
+front=0;  rear=-1;     
+}     
+}     
+}     
+void  display()     
+{     
+int  i;     
+if(front>rear)     
+else     
+{     
+}     
+}     
+int  main()     
+{     
+printf("\nQueue  is  empty\n");     
+printf("\nQueue  status  is\n");     
+for(i=front;i<=rear;i++)     
+printf("%d\t",q[i]);     
+int  ch;     
+while(1)     
+{     
+printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");     
+puts("\nEnter  your  choice\n");   
+scanf("%d",&ch);     
+switch(ch)     
+{     
+case  1:  insert();  break;     
+case  2:delete();  break;     
+case  3:display();  break;     
+case  4:  return  0;     
+default  :printf("\nInvalid  choice\n");
+}}}
+
+------------------------
+2(b) spool print
+
+#include <stdlib.h>
+#include <stdio.h>
+#define sz 100
+
+void insert(int cq[sz], int *rear, int *count, int item) {
+    if (*count == sz) {
+        printf("Queue is full!\n");
+        return;
+    }
+    *rear = (*rear + 1) % sz;
+    cq[*rear] = item;
+    (*count)++;
+}
+
+void delete(int cq[sz], int *front, int *count) {
+    if (*count == 0) {
+        printf("No job in spool\n");
+    } else {
+        *front = (*front + 1) % sz;
+        (*count)--;
+    }
+}
+
+void display(int cq[sz], int front, int count) {
+    if (count == 0) {
+        printf("Empty spool\n");
+    } else {
+        printf("Jobs in spool: ");
+        for (int i = 0; i < count; i++) {
+            printf("%d ", cq[(front + 1 + i) % sz]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int cq[sz], rear = -1, front = -1, count = 0, ch, item;
+
+    for (;;) {
+        printf("\n1. Enter Job\n2. Delete Job\n3. Display Queue\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                printf("Enter print job ID to insert: ");
+                scanf("%d", &item);
+                insert(cq, &rear, &count, item);
+                break;
+            case 2:
+                delete(cq, &front, &count);
+                break;
+            case 3:
+                display(cq, front, count);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+    return 0;
+}
+
+------------------------------
+3(a)singly linked list operation
+#include  <stdio.h>     
+#include  <stdlib.h>     
+struct  node     
+{     
+int  info;     
+struct  node  *link;     
+};     
+typedef  struct  node  *NODE;     
+NODE  insertLoc(NODE  first)     
+{     
+int  loc,count;     
+NODE  temp,cur;     
+printf("\nEnter  the  location\n");     
+scanf("%d",&loc);     
+temp  =  (NODE)malloc(sizeof(struct  node));     
+printf("\nEnter  the  data\n");     
+scanf("%d",&temp->info);     
+temp->link=NULL;     
+if(first==NULL)     
+{     
+if(loc==1)     
+first  =  temp;     
+else     
+printf("Invalid  location\n");     
+}     
+else  if(loc==1)     
+{     
+temp->link=first;     
+first=temp;     
+}     
+else     
+{     
+cur=first;     
+count=1;     
+while(cur!=NULL)     
+{     
+}     
+if(count==loc-1)     
+{     
+temp->link=cur->link;     
+cur->link=temp;    
+break;     
+}     
+cur=cur->link;     
+count++;     
+if(cur==NULL)    
+printf("Invalid  location\n");   
+}     
+return  first;     
+}     
+NODE  delete  (NODE  first)     
+{     
+NODE  temp;     
+if  (first  ==  NULL)     
+{     
+printf  ("List  Empty\n");     
+return  first;     
+}     
+temp  =  first;     
+first  =  first->link;     
+printf  ("%d  is  deleted\n",temp->info);     
+free  (temp);     
+return  first;     
+}     
+void  display  (NODE  first)     
+{     
+NODE  temp;     
+if  (first  ==  NULL)     
+printf  ("List  is  Empty\n");     
+else     
+{     
+printf  ("Content  of  List\n");     
+temp  =  first;     
+while  (temp  !=  NULL)    
+{     
+}     
+printf  ("%d\t",temp->info);     
+temp  =  temp->link;     
+printf  ("\n");     
+}     
+}     
+int  main  ()     
+{     
+int  ch;     
+NODE  first  =  NULL;     
+for  (;;)     
+{     
+printf  ("1:INSERT  2:DELETE  3:DISPLAY  4.EXIT\n");   
+scanf  ("%d",&ch);     
+switch  (ch)     
+{     
+case  1:  first  =  insertLoc  (first);     
+break;     
+case  2:  first  =  delete  (first);     
+break;     
+case  3:  display  (first);     
+break;     
+default:  exit(0);     
+}     
+}     
+}
+
+-------------
+3(b) polynomials
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure for representing polynomial terms
+struct node {
+    int c;           // Coefficient
+    int p;           // Power (exponent)
+    struct node *link; // Link to the next node
+};
+typedef struct node *NODE;
+
+// Function to allocate memory for a new node
+NODE getnode() {
+    NODE x = (NODE)malloc(sizeof(struct node));
+    if (x == NULL) {
+        printf("Out of Memory\n");
+        exit(0);
+    }
+    return x;
+}
+
+// Function to insert a term at the end of the polynomial
+NODE insertr(int cf, int px, NODE first) {
+    NODE temp = getnode();
+    temp->c = cf;
+    temp->p = px;
+    temp->link = NULL;
+
+    if (first == NULL) {
+        return temp;
+    }
+
+    NODE pres = first;
+    while (pres->link != NULL) {
+        pres = pres->link;
+    }
+    pres->link = temp;
+    return first;
+}
+
+// Function to read a polynomial from the user
+NODE readpoly(NODE first) {
+    int n, cf, px;
+    printf("Enter number of terms: ");
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        printf("Enter Term %d\n", i);
+        printf("Coefficient: ");
+        scanf("%d", &cf);
+        printf("Power: ");
+        scanf("%d", &px);
+        first = insertr(cf, px, first);
+    }
+    return first;
+}
+
+// Function to display a polynomial
+void display(NODE first) {
+    if (first == NULL) {
+        printf("Polynomial does not exist\n");
+        return;
+    }
+
+    NODE temp = first;
+    while (temp != NULL) {
+        if (temp->c > 0 && temp != first) {
+            printf("+");
+        }
+        printf("%dx^%d", temp->c, temp->p);
+        temp = temp->link;
+    }
+    printf("\n");
+}
+
+// Function to add two polynomials
+NODE addpoly(NODE poly1, NODE poly2, NODE poly) {
+    while (poly1 != NULL && poly2 != NULL) {
+        if (poly1->p > poly2->p) {
+            poly = insertr(poly1->c, poly1->p, poly);
+            poly1 = poly1->link;
+        } else if (poly1->p < poly2->p) {
+            poly = insertr(poly2->c, poly2->p, poly);
+            poly2 = poly2->link;
+        } else {
+            int sum = poly1->c + poly2->c;
+            if (sum != 0) {
+                poly = insertr(sum, poly1->p, poly);
+            }
+            poly1 = poly1->link;
+            poly2 = poly2->link;
+        }
+    }
+
+    while (poly1 != NULL) {
+        poly = insertr(poly1->c, poly1->p, poly);
+        poly1 = poly1->link;
+    }
+
+    while (poly2 != NULL) {
+        poly = insertr(poly2->c, poly2->p, poly);
+        poly2 = poly2->link;
+    }
+
+    return poly;
+}
+
+// Main function
+int main() {
+    NODE poly1 = NULL, poly2 = NULL, poly = NULL;
+
+    printf("Enter Polynomial 1\n");
+    poly1 = readpoly(poly1);
+
+    printf("\nEnter Polynomial 2\n");
+    poly2 = readpoly(poly2);
+
+    printf("\nPolynomial 1 = ");
+    display(poly1);
+
+    printf("Polynomial 2 = ");
+    display(poly2);
+
+    printf("\nResult = ");
+    poly = addpoly(poly1, poly2, poly);
+    display(poly);
+
+    return 0;
+}
+
+--------------
+4(a)doubly linked list operations
+
+#include  <stdio.h>     
+#include  <stdlib.h>     
+struct  node     
+{     
+int  info;     
+struct  node  *llink;     
+struct  node  *rlink;     
+};     
+typedef  struct  node  *NODE;     
+NODE  first  =  NULL,last  =  NULL;     
+void  insert  (int  data)     
+{     
+NODE  newnode;     
+newnode  =  (NODE)malloc(sizeof(struct  node));     
+newnode->info  =  data;     
+newnode->llink  =  NULL;     
+newnode->rlink  =  NULL;     
+if(first  ==  NULL)     
+{     
+first=last=newnode;     
+return;     
+}     
+newnode->rlink  =  first;     
+first->llink  =  newnode;     
+first  =  newnode;     
+}     
+void  delete  (int  key)     
+{     
+int  flag  =0;     
+NODE  prev,cur,next;     
+if  (first  ==  NULL)     
+{     
+printf  ("List  Empty\n");     
+return;     
+}     
+if(first->rlink  ==  NULL)  //  one  node  in  the  list     
+{     
+if  (first->info  ==  key)     
+{     
+printf  ("%d  is  deleted\n",first->info);     
+free  (first);     
+first=last=NULL;     
+return  ;     
+}     
+}     
+if(key  ==  first->info)     
+{     
+printf("\n%d  is  deleted\n",first->info);     
+cur  =  first;   
+first  =  first->rlink;     
+first->llink  =  NULL;     
+free(cur);     
+cur=NULL;    
+return;     
+}     
+if(key  ==  last  ->  info)     
+{     
+printf("\n%d  is  deleted\n",last->info);     
+cur  =  last;     
+last  =  last->llink;     
+last->rlink  =  NULL;     
+free(cur);     
+cur=NULL;    
+return;     
+}     
+cur  =  first->rlink;     
+while(cur!=last)     
+{     
+if(cur->info==key)     
+{     
+prev  =  cur->llink;     
+next  =  cur->rlink;     
+printf("\n%d  is  deleted\n",cur->info);     
+prev->rlink  =  next;     
+next->llink  =  prev;     
+free(cur);     
+cur  =  NULL;     
+flag  =1;     
+break;     
+}     
+cur=cur->rlink;     
+}     
+if(flag==0)     
+printf("\nKey  not  found\n");     
+}     
+void  display  ()     
+{     
+NODE  temp;     
+if  (first  ==  NULL)     
+else     
+{     
+}     
+}     
+int  main  ()     
+{   
+printf  ("List  is  Empty\n");     
+printf  ("Content  of  List\n");     
+temp  =  first;     
+while  (temp  !=  NULL)    
+{     
+printf  ("%d\t",temp->info);     
+temp  =  temp->rlink;     
+}     
+printf  ("\n");     
+int  ch,data;     
+for  (;;)     
+{     
+printf  ("1:INSERT  2:DELETE  3:DISPLAY  4:EXIT\n");   
+scanf  ("%d",&ch);     
+switch  (ch)     
+{     
+case  1:  printf  ("Enter  the  data\n");     
+scanf  ("%d",&data);     
+insert  (data);     
+break;     
+case  2:  printf  ("Enter  the  data  to  be  deleted\n");     
+scanf  ("%d",&data);     
+delete  (data);     
+break;     
+case  3:  display  ();     
+break;     
+default:  exit(0);     
+}     
+}     
+}  
+------------------
+4(b)college student records
+#include  <stdio.h>     
+#include  <stdlib.h>     
+#include  <string.h>     
+struct  node     
+{     
+};     
+char  name[30];     
+char  usn[20];     
+int  sem;     
+struct  node  *left;     
+struct  node  *right;     
+typedef  struct  node*  NODE;     
+NODE  insertFront  (NODE  first)     
+{     
+NODE  newnode;     
+char  name  [30];     
+char  usn  [20];     
+int  sem;     
+newnode  =  (NODE)malloc(sizeof(struct  node));     
+newnode->left  =  newnode->right  =  NULL;     
+printf  ("Enter  student  details:  \n");     
+printf  ("Name:\n");     
+scanf  ("%s",  name);     
+printf  ("USN:\n");     
+scanf  ("%s",usn);     
+printf  ("Semester:\n");     
+scanf  ("%d",&sem);     
+strcpy  (newnode->name,  name);     
+strcpy  (newnode->usn,  usn);     
+newnode->sem  =  sem;     
+if  (first  ==  NULL)     
+{     
+first  =  newnode;     
+return  first;     
+}     
+else     
+{     
+}     
+newnode->right  =  first;     
+first->left=newnode;     
+first  =  newnode;     
+return  first;     
+}     
+void  search  (NODE  first)     
+{     
+NODE  pres;     
+char  usn  [20];     
+if  (first  ==  NULL)     
+{     
+printf  ("Empty  Database\n");     
+return;   
+}     
+printf  ("Enter  USN  to  be  searched:  ");     
+scanf  ("%s",  usn);     
+pres  =  first;     
+while  (pres  !=  NULL  &&  strcmp  (usn,  pres->usn)  !=  0)     
+pres  =  pres->right;     
+if  (pres  ==  NULL)     
+printf  ("Student  not  found\n");     
+else     
+}     
+printf  ("Student  found\n");     
+void  display  (NODE  first)     
+{     
+if  (first  ==  NULL)     
+printf  ("Empty  Database\n");     
+else     
+{     
+}     
+}     
+int  main  ()     
+{     
+int  ch;     
+printf  ("Student  details:  \n");     
+printf  ("Name\t\tUSN\t\t\tSemester\n");     
+while  (first  !=  NULL)     
+{     
+printf  ("%s\t\t%s\t\t%d\n",  first->name,  first->usn,  first->sem);     
+first  =  first->right;     
+}     
+NODE  first  =  NULL;     
+for  (;;)     
+{     
+printf  ("1:INSERT  2:SEARCH  3:DISPLAY\n");     
+scanf  ("%d",  &ch);     
+switch  (ch)     
+{     
+case  1  :  first  =  insertFront  (first);     
+break;     
+case  2  :  search  (first);     
+break;     
+case  3  :  display  (first);     
+break;     
+default  :  exit(0);     
+}     
+}     
+return  0;     
+}  
+
+----------------------
+
+5(a) displaying binary tree
+#include <stdio.h>
+#define SIZE 100
+
+// Function to insert an element into the binary tree
+void insert(int tree[SIZE], int value) {
+    int index = 0;
+
+    // Traverse the tree to find the correct position
+    while (tree[index] != -1) {
+        if (value < tree[index]) {
+            index = 2 * index + 1; // Go to left child
+        } else {
+            index = 2 * index + 2; // Go to right child
+        }
+
+        // Ensure index stays within bounds
+        if (index >= SIZE) {
+            printf("Tree is full, cannot insert %d\n", value);
+            return;
+        }
+    }
+
+    // Insert the value at the found position
+    tree[index] = value;
+}
+
+// Function to display the binary tree
+void display(int tree[SIZE]) {
+    printf("Binary Tree (Array Representation):\n");
+    for (int i = 0; i < SIZE; i++) {
+        if (tree[i] != -1) {
+            printf("tree[%d] = %d\n", i, tree[i]);
+        }
+    }
+}
+
+int main() {
+    int tree[SIZE], n, value;
+
+    // Initialize the tree array with -1 (indicating empty nodes)
+    for (int i = 0; i < SIZE; i++) {
+        tree[i] = -1;
+    }
+
+    // Input number of elements to insert into the tree
+    printf("Enter the number of elements to insert into the Binary Tree: ");
+    scanf("%d", &n);
+
+    // Input elements and insert them into the tree
+    printf("Enter the elements:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        insert(tree, value);
+    }
+
+    // Display the binary tree
+    display(tree);
+
+    return 0;
+}
+
+-----------------------------
+5(b) Tree expression evaluation
+#include  <stdio.h>     
+#include  <stdlib.h>     
+#include  <string.h>     
+#include  <ctype.h>     
+int  main  ()     
+{     
+
+char  a[100],ch;     
+int  t1,t2,res,i,count=0;     
+printf  ("Enter  Expression  Tree  of  the  form  (a+b*(c/d)\n");     
+scanf  ("%s",a);     
+for  (i=0;i<strlen(a);i++)     
+{     
+ch  =  a[i];     
+if  (isdigit(ch))     
+break;     
+else     
+count  =  count+1;     
+}     
+count  =  count-1;     
+while  (count  >=  0)     
+{     
+t1  =  a[2*count+1]-48;     
+t2  =  a[2*count+2]-48;     
+if  (a[count]  ==  '/')     
+res  =  t1/t2;     
+else  if  (a[count]  ==  '*')     
+res  =  t1*t2;     
+else  if  (a[count]  ==  '+')     
+res  =  t1+t2;     
+else  if  (a[count]  ==  '-')     
+res  =  t1-t2;     
+else     
+printf  ("Invalid  Expression\n");     
+a[count]  =  res+48;     
+count  =  count-1;     
+}     
+printf  ("Evaluated  Result  from  Expression  Tree  is  %d\n",res);  
+}
+
+---------
+6(a)Binary search Tree
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a binary tree node
+struct node {
+    int info;
+    struct node *left, *right;
+};
+typedef struct node *NODE;
+
+// Function to insert an item into the BST
+NODE insert(NODE root, int item) {
+    NODE newnode = (NODE)malloc(sizeof(struct node));
+    newnode->info = item;
+    newnode->left = newnode->right = NULL;
+
+    if (root == NULL) {
+        // If tree is empty, make the new node the root
+        return newnode;
+    }
+
+    NODE current = root, parent = NULL;
+    while (current != NULL) {
+        parent = current;
+        if (item < current->info) {
+            current = current->left;
+        } else if (item > current->info) {
+            current = current->right;
+        } else {
+            // Duplicate items are not allowed
+            printf("Duplicate item not allowed: %d\n", item);
+            free(newnode); // Free the unused node
+            return root;
+        }
+    }
+
+    // Attach the new node to the appropriate parent
+    if (item < parent->info) {
+        parent->left = newnode;
+    } else {
+        parent->right = newnode;
+    }
+
+    return root;
+}
+
+// Function to perform preorder traversal of the BST
+void preorder(NODE root) {
+    if (root != NULL) {
+        printf("%d ", root->info);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+// Main function
+int main() {
+    NODE root = NULL;
+    int choice, item;
+
+    while (1) {
+        printf("\n1: INSERT  2: PREORDER  3: EXIT\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter the item to insert: ");
+                scanf("%d", &item);
+                root = insert(root, item);
+                break;
+            case 2:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    printf("Preorder Traversal: ");
+                    preorder(root);
+                    printf("\n");
+                }
+                break;
+            case 3:
+                exit(0);
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    }
+
+    return 0;
+}
+--------------------------
+6(b)employee report
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Define the structure for a binary tree node
+struct node {
+    int eid;                   // Employee ID
+    char ename[20];            // Employee Name
+    float lt;                  // Login Time
+    struct node *left, *right; // Pointers for left and right children
+};
+typedef struct node *NODE;
+
+// Function to insert a new employee record into the tree
+NODE insert(NODE root, int eid, char ename[20], float lt) {
+    NODE newnode = (NODE)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation failed.\n");
+        return root;
+    }
+    newnode->eid = eid;
+    strcpy(newnode->ename, ename);
+    newnode->lt = lt;
+    newnode->left = newnode->right = NULL;
+
+    if (root == NULL) {
+        return newnode; // New node becomes the root
+    }
+
+    NODE current = root, parent = NULL;
+
+    // Traverse to find the correct position
+    while (current != NULL) {
+        parent = current;
+        if (eid < current->eid) {
+            current = current->left;
+        } else if (eid > current->eid) {
+            current = current->right;
+        } else {
+            printf("Duplicate Employee ID not allowed: %d\n", eid);
+            free(newnode); // Free the unused node
+            return root;
+        }
+    }
+
+    // Attach the new node to the appropriate parent
+    if (eid < parent->eid) {
+        parent->left = newnode;
+    } else {
+        parent->right = newnode;
+    }
+
+    return root;
+}
+
+// Function to display the employee records in ascending order of Employee ID
+void inorder(NODE root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d\t%-10s\t%.2f\n", root->eid, root->ename, root->lt);
+        inorder(root->right);
+    }
+}
+
+int main() {
+    NODE root = NULL; // Root of the binary search tree
+    int choice, eid;
+    char ename[20];
+    float lt;
+
+    while (1) {
+        printf("\n1: INSERT  2: DISPLAY REPORT (INORDER)  3: EXIT\n");
+        printf("Enter your choice: ");
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input. Please try again.\n");
+            while (getchar() != '\n'); // Clear input buffer
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                printf("Enter Employee Details:\n");
+                printf("Employee ID: ");
+                if (scanf("%d", &eid) != 1) {
+                    printf("Invalid Employee ID. Please try again.\n");
+                    while (getchar() != '\n');
+                    continue;
+                }
+                printf("Employee Name: ");
+                scanf("%s", ename);
+                printf("Login Time (HH.MM): ");
+                if (scanf("%f", &lt) != 1) {
+                    printf("Invalid Login Time. Please try again.\n");
+                    while (getchar() != '\n');
+                    continue;
+                }
+                root = insert(root, eid, ename, lt);
+                break;
+            case 2:
+                if (root == NULL) {
+                    printf("No Employee Data Available.\n");
+                } else {
+                    printf("\nEmployee Report:\n");
+                    printf("ID\tName\t\tLogin Time\n");
+                    printf("-----------------------------------\n");
+                    inorder(root);
+                }
+                break;
+            case 3:
+                printf("Exiting program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
